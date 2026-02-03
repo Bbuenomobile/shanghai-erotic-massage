@@ -1,0 +1,16 @@
+{
+    "name": "Shanghai Erotic massage",
+    "short_name": "Erotic Shanghai Massage \ud83c\udf0d",
+    "description": "Discover the ultimate erotic massage in Shanghai. Explore 0 verified venues blending Bund sensuality with local allure. Book your indulgent escape in this neon-lit metropolis today!",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#e91e63",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
