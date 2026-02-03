@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ListingCard from '../components/ListingCard.astro';
+import GeoBanner from '../components/GeoBanner.astro';
 
 export async function getStaticPaths() {
     // Safe fetch helper defined inside getStaticPaths for Astro build context
@@ -364,6 +365,13 @@ const metaDesc = fullListing.description
                         </section>
                     )}
                     
+                    <!-- GeoBanner for non-Gold/Silver listings - After Gallery -->
+                    {!listing.is_gold && !listing.is_premium && (
+                        <div class="listing-banner-slot">
+                            <GeoBanner />
+                        </div>
+                    )}
+                    
                     <!-- Why Choose Section - Unique SEO content -->
                     <section class="section why-choose">
                         <h2>Why Choose {listing.name}?</h2>
@@ -499,6 +507,13 @@ const metaDesc = fullListing.description
                     </div>
                 </aside>
             </div>
+            
+            <!-- GeoBanner for non-Gold/Silver listings - Before Similar Listings -->
+            {!listing.is_gold && !listing.is_premium && (
+                <div class="listing-banner-slot bottom-banner">
+                    <GeoBanner />
+                </div>
+            )}
             
             <!-- Similar Listings -->
             {similarListings.length > 0 && (
@@ -1060,6 +1075,18 @@ const metaDesc = fullListing.description
         border-radius: 8px;
         font-weight: 600;
     }
+    
+    /* GeoBanner slots for non-premium listings */
+    .listing-banner-slot {
+        margin: 30px 0;
+        padding: 20px 0;
+        text-align: center;
+    }
+    .listing-banner-slot.bottom-banner {
+        margin: 40px auto;
+        max-width: 728px;
+    }
+    
     <!-- Mobile Sticky Footer for Listings -->
     {fullListing.whatsapp || fullListing.phone ? (
         <div class="mobile-sticky-footer">

@@ -152,6 +152,13 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
         </div>
     </section>
     
+    <!-- GeoBanner - After listings for homepage -->
+    <div class="home-banner-slot">
+        <div class="container">
+            <GeoBanner />
+        </div>
+    </div>
+    
     <!-- About Section -->
     <section class="about-section" id="about">
         <div class="container">
@@ -161,7 +168,7 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     </section>
     
     <!-- Category Navigation -->
-    <CategoryNav city="Shanghai" />
+    <CategoryNav city="Shanghai" mainCategory="erotic-massage" />
     
     <!-- Network Links - Links to other satellite sites -->
     <NetworkLinks currentCity="Shanghai" currentCountry="China" category="erotic-massage" />
@@ -336,9 +343,77 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
             ]
         }
     })}></script>
+    
+    <!-- Sticky CTA Footer for Live Cams -->
+    <a href="https://erotiklive.net/" target="_blank" rel="nofollow noopener" class="live-cta-sticky">
+        <span class="live-dot"></span>
+        <span class="live-text">Watch Girls Online</span>
+    </a>
 </Base>
 
 <style>
+    /* Sticky Live CTA Footer */
+    .live-cta-sticky {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+        color: white;
+        font-weight: 700;
+        font-size: 1.05rem;
+        border-radius: 50px;
+        text-decoration: none;
+        box-shadow: 
+            0 8px 30px rgba(236, 72, 153, 0.5),
+            0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: pulseGlow 2s infinite;
+    }
+    
+    .live-cta-sticky:hover {
+        transform: translateX(-50%) translateY(-4px) scale(1.02);
+        box-shadow: 
+            0 12px 40px rgba(236, 72, 153, 0.6),
+            0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    
+    .live-dot {
+        width: 12px;
+        height: 12px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulseDot 1.5s infinite;
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+    
+    .live-text {
+        letter-spacing: 0.3px;
+    }
+    
+    @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 8px 30px rgba(236, 72, 153, 0.5), 0 4px 15px rgba(0, 0, 0, 0.2); }
+        50% { box-shadow: 0 8px 35px rgba(236, 72, 153, 0.65), 0 4px 18px rgba(0, 0, 0, 0.25); }
+    }
+    
+    @keyframes pulseDot {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+    }
+    
+    @media (max-width: 600px) {
+        .live-cta-sticky {
+            bottom: 15px;
+            padding: 14px 24px;
+            font-size: 0.95rem;
+        }
+    }
+    
     /* Compact Hero */
     .hero-compact {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
