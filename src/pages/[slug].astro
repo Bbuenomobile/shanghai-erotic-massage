@@ -124,29 +124,38 @@ const metaDesc = fullListing.description
                 </span>
             </nav>
             
-            <!-- Header - Clean compact design -->
-            <header class="listing-header">
-                <div class="listing-hero-wrapper">
+            <!-- Hero Banner - Full width modern design -->
+            <header class="listing-hero-banner">
+                <div class="hero-image-container">
                     <img 
                         src={listing.thumbnail} 
                         alt={`${listing.name} - Professional Erotic massage venue in Shanghai, China. ${listing.is_gold ? 'Gold verified establishment.' : listing.is_premium ? 'Premium verified venue.' : 'Quality adult wellness services.'}`}
-                        class="listing-hero-image"
+                        class="hero-bg-image"
                         loading="eager"
                         itemprop="image"
                     />
+                    <div class="hero-overlay"></div>
                 </div>
-                <div class="listing-header-content">
+                <div class="hero-content">
+                    <div class="hero-badges">
+                        {listing.is_gold && <span class="hero-badge gold"><span class="badge-icon">🏆</span> Gold Verified</span>}
+                        {listing.is_premium && !listing.is_gold && <span class="hero-badge premium"><span class="badge-icon">⭐</span> Premium</span>}
+                    </div>
                     <h1 itemprop="name">{listing.name}</h1>
-                    <p class="location" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                        📍 <span itemprop="addressLocality">{listing.city}</span>, 
+                    <p class="hero-location" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <span class="location-icon">📍</span>
+                        <span itemprop="addressLocality">{listing.city}</span>, 
                         <span itemprop="addressCountry">{listing.country}</span>
                     </p>
-                    <div class="header-badges">
-                        {listing.is_gold && <span class="badge gold">🏆 Gold</span>}
-                        {listing.is_premium && <span class="badge premium">⭐ Premium</span>}
-                    </div>
                 </div>
             </header>
+            
+            <!-- GeoBanner - Top position for non-Gold/Silver -->
+            {!listing.is_gold && !listing.is_premium && (
+                <div class="listing-banner-slot top-banner">
+                    <GeoBanner />
+                </div>
+            )}
             
             <!-- QUICK CONTACT SECTION - Very prominent, mobile-first -->
             <section class="quick-contact-section">
@@ -1078,9 +1087,15 @@ const metaDesc = fullListing.description
     
     /* GeoBanner slots for non-premium listings */
     .listing-banner-slot {
-        margin: 30px 0;
-        padding: 20px 0;
+        margin: 24px 0;
         text-align: center;
+    }
+    .listing-banner-slot.top-banner {
+        margin-bottom: 24px;
+        padding: 16px;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
     }
     .listing-banner-slot.bottom-banner {
         margin: 40px auto;
