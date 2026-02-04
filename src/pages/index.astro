@@ -85,79 +85,27 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
         </div>
     </section>
     
-    <!-- Table of Contents - SEO Navigation -->
-    <nav class="toc-section" aria-label="Page contents">
-        <div class="container">
-            <details open>
-                <summary class="toc-title">📑 Quick Navigation</summary>
-                <ul class="toc-list">
-                    <li><a href="#all-listings">🏢 All {listings.length} Venues</a></li>
-                    <li><a href="#about">📖 About Erotic massage</a></li>
-                    <li><a href="#categories">🏷️ Massage Types</a></li>
-                    {faq && faq.length > 0 && <li><a href="#faq">❓ FAQ ({faq.length} questions)</a></li>}
-                    <li><a href="#local-guide">🗺️ Local Guide</a></li>
-                    <li><a href="#pricing">💰 Pricing Guide</a></li>
-                </ul>
-            </details>
-        </div>
-    </nav>
-    
-    <!-- Listings Grid - Mobile First -->
-    <section class="listings" id="all-listings">
-        <div class="container">
-            <div class="listings-grid-3">
-                {listings.map((listing: any) => (
-                    <ListingCard listing={listing} />
-                ))}
-            </div>
-            
-            {listings.length === 0 && (
-                <p class="no-listings">No listings found. Check back soon!</p>
-            )}
-        </div>
-    </section>
-
-    <!-- Geo-Targeted Banner (fetched from ErotikMaps API) -->
-    <GeoBanner />
-    
-    <!-- About Section -->
-    <nav class="toc-section" aria-label="Page contents">
-        <div class="container">
-            <details open>
-                <summary class="toc-title">📑 Quick Navigation</summary>
-                <ul class="toc-list">
-                    <li><a href="#all-listings">🏢 All {listings.length} Venues</a></li>
-                    <li><a href="#about">📖 About Erotic massage</a></li>
-                    <li><a href="#categories">🏷️ Massage Types</a></li>
-                    {faq && faq.length > 0 && <li><a href="#faq">❓ FAQ ({faq.length} questions)</a></li>}
-                    <li><a href="#local-guide">🗺️ Local Guide</a></li>
-                    <li><a href="#pricing">💰 Pricing Guide</a></li>
-                </ul>
-            </details>
-        </div>
-    </nav>
-    
-    <!-- Listings Grid - Mobile First -->
-    <section class="listings" id="all-listings">
-        <div class="container">
-            <div class="listings-grid-3">
-                {listings.map((listing: any) => (
-                    <ListingCard listing={listing} />
-                ))}
-            </div>
-            
-            {listings.length === 0 && (
-                <p class="no-listings">No listings found. Check back soon!</p>
-            )}
-        </div>
-    </section>
-    
-    <!-- GeoBanner - After listings for homepage -->
-    <div class="home-banner-slot">
+    <!-- GeoBanner - HIGH on page, right after hero -->
+    <div class="home-banner-slot top-banner">
         <div class="container">
             <GeoBanner />
         </div>
     </div>
+    
+    <!-- Listings Grid - Mobile First -->
+    <section class="listings" id="all-listings">
+        <div class="container">
+            <div class="listings-grid-3">
+                {listings.map((listing: any) => (
+                    <ListingCard listing={listing} />
+                ))}
+            </div>
+            
+            {listings.length === 0 && (
+                <p class="no-listings">No listings found. Check back soon!</p>
+            )}
+        </div>
+    </section>
     
     <!-- About Section -->
     <section class="about-section" id="about">
@@ -169,6 +117,23 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     
     <!-- Category Navigation -->
     <CategoryNav city="Shanghai" mainCategory="erotic-massage" />
+    
+    <!-- Table of Contents - SEO Navigation (lower on page) -->
+    <nav class="toc-section" aria-label="Page contents" id="navigation">
+        <div class="container">
+            <details open>
+                <summary class="toc-title">📑 Quick Navigation</summary>
+                <ul class="toc-list">
+                    <li><a href="#all-listings">🏢 All {listings.length} Venues</a></li>
+                    <li><a href="#about">📖 About Erotic massage</a></li>
+                    <li><a href="#categories">🏷️ Massage Types</a></li>
+                    {faq && faq.length > 0 && <li><a href="#faq">❓ FAQ ({faq.length} questions)</a></li>}
+                    <li><a href="#local-guide">🗺️ Local Guide</a></li>
+                    <li><a href="#pricing">💰 Pricing Guide</a></li>
+                </ul>
+            </details>
+        </div>
+    </nav>
     
     <!-- Network Links - Links to other satellite sites -->
     <NetworkLinks currentCity="Shanghai" currentCountry="China" category="erotic-massage" />

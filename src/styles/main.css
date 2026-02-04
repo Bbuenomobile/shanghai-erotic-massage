@@ -723,8 +723,16 @@ body.menu-open {
 .home-banner-slot,
 .category-banner-slot,
 .listing-banner-slot {
-    margin: 40px 0;
+    margin: 30px 0;
     text-align: center;
+}
+
+.home-banner-slot.top-banner {
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .home-banner-slot .container,
