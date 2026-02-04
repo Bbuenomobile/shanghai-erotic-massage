@@ -461,7 +461,7 @@ body.menu-open {
 .hero-static {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+    background: linear-gradient(135deg, #872243 0%, #9c27b0 100%);
     background-size: cover;
     background-position: center;
     z-index: 1;
@@ -731,6 +731,19 @@ body.menu-open {
     margin: 0;
     padding: 12px 0;
     background: transparent;
+}
+
+@media (max-width: 768px) {
+    .home-banner-slot.top-banner {
+        padding: 6px 0;
+        margin-bottom: 0;
+    }
+    .listings {
+        padding-top: 12px;
+    }
+    .listings-header {
+        margin-bottom: 16px;
+    }
 }
 
 .home-banner-slot .container,
