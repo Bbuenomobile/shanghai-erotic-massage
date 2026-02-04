@@ -642,22 +642,26 @@ body.menu-open {
    LISTINGS GRID - PREMIUM CARDS
    ============================================ */
 .listings {
-    padding: 80px 0;
+    padding: 24px 0;
     background: var(--bg);
 }
 
+@media (max-width: 768px) {
+    .listings {
+        padding: 8px 0 24px 0;
+    }
+}
+
 .listings h2 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    margin-bottom: 16px;
-    text-align: center;
+    margin-bottom: 12px;
 }
 
 .section-intro {
-    text-align: center;
     color: var(--text-light);
-    margin-bottom: 40px;
-    font-size: 1.1rem;
+    margin-bottom: 24px;
+    font-size: 1rem;
 }
 
 /* ============================================
@@ -735,14 +739,14 @@ body.menu-open {
 
 @media (max-width: 768px) {
     .home-banner-slot.top-banner {
-        padding: 6px 0;
+        padding: 4px 0;
         margin-bottom: 0;
     }
-    .listings {
-        padding-top: 12px;
-    }
     .listings-header {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
+    }
+    .listings-header h2 {
+        font-size: 1.25rem;
     }
 }
 
