@@ -95,6 +95,10 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     <!-- Listings Grid - Mobile First -->
     <section class="listings" id="all-listings">
         <div class="container">
+            <div class="listings-header">
+                <h2>🏢 Best Erotic massage in Shanghai</h2>
+                <p class="listings-intro">Browse our curated selection of {listings.length} verified erotic massage venues. Gold ⭐ and Premium ✨ listings are displayed first.</p>
+            </div>
             <div class="listings-grid-3">
                 {listings.map((listing: any) => (
                     <ListingCard listing={listing} />
@@ -600,6 +604,23 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     /* Listings Section */
     .listings {
         padding: 24px 0;
+    }
+    
+    .listings-header {
+        margin-bottom: 24px;
+    }
+    
+    .listings-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text);
+    }
+    
+    .listings-intro {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
     
     .section-intro {

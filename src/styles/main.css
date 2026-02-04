@@ -723,16 +723,14 @@ body.menu-open {
 .home-banner-slot,
 .category-banner-slot,
 .listing-banner-slot {
-    margin: 30px 0;
+    margin: 16px 0;
     text-align: center;
 }
 
 .home-banner-slot.top-banner {
-    margin-top: 0;
-    margin-bottom: 30px;
-    padding: 20px 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border-bottom: 1px solid #e2e8f0;
+    margin: 0;
+    padding: 12px 0;
+    background: transparent;
 }
 
 .home-banner-slot .container,
@@ -741,17 +739,17 @@ body.menu-open {
 }
 
 .listing-banner-slot {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .listing-banner-slot.bottom-banner {
-    margin: 50px auto;
+    margin: 20px auto;
     max-width: 728px;
 }
 
 /* Geo banner container styling */
 .geo-banner-container {
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .geo-banner-container img {
