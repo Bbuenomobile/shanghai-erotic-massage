@@ -739,12 +739,16 @@ body.menu-open {
 
 @media (max-width: 768px) {
     .home-banner-slot.top-banner {
-        padding: 2px 0 0 0 !important;
+        padding: 0 !important;
         margin: 0 !important;
+    }
+    .listings {
+        margin-top: -30px !important;
+        padding-top: 0 !important;
     }
     .listings-header {
         margin-bottom: 10px;
-        padding-top: 8px;
+        padding-top: 0;
     }
     .listings-header h2 {
         font-size: 1.2rem;

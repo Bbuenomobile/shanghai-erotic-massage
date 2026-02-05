@@ -38,9 +38,64 @@ async function safeFetchJson(url: string): Promise<any[]> {
     }
 }
 
-// Fetch listings from API at build time
-const apiUrl = 'https://www.erotikmaps.com/api/v1/satellite/listings?city=shanghai&category=erotic-massage&limit=100';
-const listings = await safeFetchJson(apiUrl);
+// Fetch listings from API at build time - with country fallback
+const cityApiUrl = 'https://www.erotikmaps.com/api/v1/satellite/listings?city=shanghai&category=erotic-massage&limit=100';
+let listings = await safeFetchJson(cityApiUrl);
+let isCountryFallback = false;
+let fallbackLocation = 'Shanghai';
+
+// If no listings in city, fallback to country
+if (listings.length === 0) {
+    const countryApiUrl = 'https://www.erotikmaps.com/api/v1/satellite/listings?country=china&category=erotic-massage&limit=50';
+    listings = await safeFetchJson(countryApiUrl);
+    isCountryFallback = true;
+    fallbackLocation = 'China';
+}
+
+// Related categories mapping for cross-promotion
+const relatedCategories: Record<string, { slug: string; label: string; icon: string }[]> = {
+    'erotic-massage': [
+        { slug: 'gentlemens-club', label: "Gentlemen's Clubs", icon: '🥂' },
+        { slug: 'swinger-club', label: 'Swinger Clubs', icon: '💑' }
+    ],
+    'gentlemens-club': [
+        { slug: 'erotic-massage', label: 'Erotic Massage', icon: '💆' },
+        { slug: 'swinger-club', label: 'Swinger Clubs', icon: '💑' }
+    ],
+    'swinger-club': [
+        { slug: 'erotic-massage', label: 'Erotic Massage', icon: '💆' },
+        { slug: 'gentlemens-club', label: "Gentlemen's Clubs", icon: '🥂' }
+    ]
+};
+
+// Fetch related category listings - with country fallback
+const currentCategory = 'erotic-massage';
+const related = relatedCategories[currentCategory] || [];
+const relatedListings: { category: string; label: string; icon: string; listings: any[]; isCountry: boolean }[] = [];
+
+for (const rel of related) {
+    // Try city first
+    let relUrl = 'https://www.erotikmaps.com/api/v1/satellite/listings?city=shanghai&category=' + rel.slug + '&limit=6';
+    let relData = await safeFetchJson(relUrl);
+    let isRelCountry = false;
+    
+    // Fallback to country if no city listings
+    if (relData.length === 0) {
+        relUrl = 'https://www.erotikmaps.com/api/v1/satellite/listings?country=china&category=' + rel.slug + '&limit=6';
+        relData = await safeFetchJson(relUrl);
+        isRelCountry = true;
+    }
+    
+    if (relData.length > 0) {
+        relatedListings.push({
+            category: rel.slug,
+            label: rel.label,
+            icon: rel.icon,
+            listings: relData.slice(0, 6),
+            isCountry: isRelCountry
+        });
+    }
+}
 
 const faq = [{"question":"What is the best Erotic massage in Shanghai?","answer":"<p>Finding the best <strong>erotic massage in Shanghai<\/strong> depends on your vibe—opt for Bund-view parlors for luxury or French Concession hideaways for intimate charm. Top spots emphasize skilled therapists using meridian-based techniques with erotic twists, often in silk-draped rooms scented with osmanthus. While our directory has 0 verified listings yet, prioritize WeChat-verified venues near Nanjing Road for discretion. Expect glowing reviews for full-body sessions blending Shanghai's humid allure with tantric precision, leaving you renewed amid the city's neon glow. Always check recent expat forums for hottest picks.<\/p>"},{"question":"How much does Erotic massage cost in Shanghai?","answer":"<p><strong>Erotic massage in Shanghai<\/strong> typically costs 500-1500 RMB ($70-210 USD) for a 60-90 minute session, varying by district. Budget options in Changning start at 500 RMB, while premium Bund or Pudong spots hit 1200+ RMB with extras like Nuru slides. Tips of 100-200 RMB are customary in cash. Prices reflect Shanghai's tiered economy—affordable for locals, indulgent for tourists. Negotiate politely via WeChat; avoid street touts. Factor in humid weather perks like cooling gels for ultimate value.<\/p>"},{"question":"Is Erotic massage legal in China?","answer":"<p>Erotic massage occupies a gray area in China—non-sexual massage is legal and widespread, but explicit erotic services are not officially permitted under public morality laws. In Shanghai, discreet parlors operate via private networks, especially for foreigners, with police raids rare if low-key. Visitors should stick to reputable, WeChat-booked spots in upscale areas like Jing'an to minimize risks. Focus on 'relaxation' euphemisms; English-speaking staff help navigate. Our 0 verified listings prioritize safety—know local customs to enjoy responsibly without issues.<\/p>"},{"question":"What are the best areas for Erotic massage in Shanghai?","answer":"<p>The prime spots for <strong>erotic massage Shanghai<\/strong> cluster in the French Concession's leafy lanes for cozy discretion, the Bund's shadowy alleys for glamorous vibes, and Jing'an's high-rise havens near temples. Pudong offers sleek, modern parlors with skyline views, while Xintiandi suits upscale seekers amid Huaihai Road buzz. Avoid tourist traps on Nanjing East Road; these neighborhoods blend Shanghai's Art Deco past with neon present, ensuring privacy in the humid nights. Our directory's 0 listings will spotlight these soon—use metro Line 2 for easy access.<\/p>"},{"question":"What should I know before visiting a Erotic massage venue in Shanghai?","answer":"<p>Before an <strong>erotic massage in Shanghai<\/strong>, book via WeChat for legitimacy, arrive clean after Shanghai's steamy days, and communicate boundaries clearly—'relax only' or full service. Dress smart-casual, bring cash (RMB) for tips, and learn basic Mandarin phrases like 'hěn hǎo' (very good). Respect no-touch zones, tip generously (10-20%), and exit discreetly. Humidity means light clothing post-session; expats note English menus in top spots. With 0 verified listings here, cross-check Dianping app reviews for authenticity and savor the cultural nuance safely.<\/p>"}];
 const canonicalUrl = 'https://eroticmassageshanghai.com/';
@@ -96,8 +151,14 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     <section class="listings" id="all-listings">
         <div class="container">
             <div class="listings-header">
-                <h2>🏢 Best Erotic massage in Shanghai</h2>
-                <p class="listings-intro">Browse our curated selection of {listings.length} verified erotic massage venues. Gold ⭐ and Premium ✨ listings are displayed first.</p>
+                <h2>🏢 Best Erotic massage in {isCountryFallback ? 'China' : 'Shanghai'}</h2>
+                <p class="listings-intro">
+                    {isCountryFallback ? (
+                        <>Showing {listings.length} venues from China. No listings found specifically in Shanghai yet.</>
+                    ) : (
+                        <>Browse our curated selection of {listings.length} verified erotic massage venues. Gold ⭐ and Premium ✨ listings are displayed first.</>
+                    )}
+                </p>
             </div>
             <div class="listings-grid-3">
                 {listings.map((listing: any) => (
@@ -110,6 +171,27 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
             )}
         </div>
     </section>
+    
+    <!-- Related Categories - Cross-promotion -->
+    {relatedListings.length > 0 && (
+        <section class="related-categories" id="related-venues">
+            <div class="container">
+                <h2>🔥 More Adult Entertainment in China</h2>
+                <p class="section-intro">Discover other adult venues near you</p>
+                
+                {relatedListings.map((cat) => (
+                    <div class="related-category-block">
+                        <h3>{cat.icon} {cat.label} in {cat.isCountry ? 'China' : 'Shanghai'}</h3>
+                        <div class="listings-grid-3">
+                            {cat.listings.map((listing: any) => (
+                                <ListingCard listing={listing} />
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )}
     
     <!-- About Section -->
     <section class="about-section" id="about">
@@ -584,6 +666,48 @@ const heroListings = [...goldListings, ...premiumListings.filter((l: any) => !l.
     }
     @media (min-width: 900px) {
         .listings-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    
+    /* Related Categories - Cross Promotion */
+    .related-categories {
+        background: linear-gradient(135deg, var(--bg) 0%, var(--card-bg) 100%);
+        padding: 40px 0;
+        border-top: 1px solid var(--border);
+    }
+    .related-categories h2 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+    .related-categories .section-intro {
+        text-align: center;
+        color: var(--text-light);
+        margin-bottom: 30px;
+    }
+    .related-category-block {
+        margin-bottom: 30px;
+    }
+    .related-category-block:last-child {
+        margin-bottom: 0;
+    }
+    .related-category-block h3 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--primary);
+        display: inline-block;
+    }
+    
+    @media (max-width: 768px) {
+        .related-categories {
+            padding: 24px 0;
+        }
+        .related-categories h2 {
+            font-size: 1.25rem;
+        }
+        .related-category-block h3 {
+            font-size: 1rem;
+        }
     }
     
     /* About Section */
